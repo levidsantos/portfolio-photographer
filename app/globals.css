@@ -1,33 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Big+Shoulders+Display:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --font-manrope: 'Manrope', system-ui, sans-serif;
+  --font-big-shoulders: 'Big Shoulders Display', system-ui, sans-serif;
+  --font-cormorant: 'Cormorant Garamond', Georgia, serif;
+
+  --color-off-white: #F8F6F1;
+  --color-sand: #EAE5DC;
+  --color-taupe: #C7BBA9;
+  --color-olive: #827969;
+  --color-graphite: #292824;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  body {
+    background-color: var(--color-off-white);
+    color: var(--color-graphite);
+    font-family: var(--font-manrope);
+  }
+
+  /* Respeitar prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* Foco visível para acessibilidade */
+  :focus-visible {
+    outline: 2px solid var(--color-olive);
+    outline-offset: 3px;
+  }
 }
 
 @layer utilities {
+  .font-serif-italic {
+    font-family: var(--font-cormorant);
+    font-style: italic;
+  }
+
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Overlay sutil para imagens com texto */
+  .img-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(41, 40, 36, 0.15) 0%,
+      rgba(41, 40, 36, 0.4) 100%
+    );
+  }
+
+  /* Zoom discreto no hover — aplicado a container */
+  .hover-zoom {
+    overflow: hidden;
+  }
+  .hover-zoom img {
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .hover-zoom:hover img {
+    transform: scale(1.04);
+  }
+
+  /* Linha decorativa horizontal */
+  .divider-line {
+    width: 2.5rem;
+    height: 1px;
+    background-color: var(--color-olive);
+    display: inline-block;
+  }
+}
+
+/* Lightbox scrolllock */
+body.lightbox-open {
+  overflow: hidden;
 }
